@@ -1,0 +1,9 @@
+.dropdown-menu {
+  max-height: 175px;
+  overflow-y: auto;
+}
+
+h4 {
+  margin: 0;
+  padding: 0;
+}
