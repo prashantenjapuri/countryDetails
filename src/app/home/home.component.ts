@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppService } from '../app.service';
 // import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 
 @Component({
@@ -7,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  constructor() {}
+  selectedCountry: any;
+  constructor(private AppService: AppService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.AppService.sendSelcetedCountryName
+      .asObservable()
+      .subscribe((result) => {
+        this.selectedCountry = result;
+      });
+  }
 }

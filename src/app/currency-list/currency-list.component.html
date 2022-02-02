@@ -1,1 +1,14 @@
-<p>currency-list works!</p>
+<h4>Currency List</h4>
+<!-- table -->
+<table class="table table-dark">
+  <tr>
+    <th scope="row">Name</th>
+    <th>Code</th>
+    <th>Symbol</th>
+  </tr>
+  <tr *ngFor="let curr of currency">
+    <td scope="row">{{ curr.name }}</td>
+    <td>{{ curr.code }}</td>
+    <td>{{ curr.symbol }}</td>
+  </tr>
+</table>

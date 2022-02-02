@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-// import { ActivatedRoute, Router } from '@angular/router';
+import { AppService } from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -12,17 +12,15 @@ export class AppComponent {
   code: string;
   url: string;
   selectedCountry: {};
-  capital: string;
-  currentRoute: string;
-  arr: string[];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private AppService: AppService) {}
 
   ngOnInit() {
     this.fetchCountries();
   }
 
   private fetchCountries() {
+    //api call ---------This will give you list of country names for dropdown items
     this.http.get('https://restcountries.com/v2/all').subscribe((country) => {
       this.countryArray = country;
     });
@@ -30,13 +28,12 @@ export class AppComponent {
 
   onCountrySelection(event: PointerEvent) {
     this.code = (<HTMLElement>event.target).id;
-    // console.log(this.code);
     this.url = 'https://restcountries.com/v2/alpha/' + this.code;
 
-    // api call
-    this.http.get(this.url).subscribe((country: { capital: string }) => {
+    // api call --------- This will give you details of the selected country from the dropdown
+    this.http.get(this.url).subscribe((country) => {
       this.selectedCountry = JSON.parse(JSON.stringify(country));
-      console.log(this.selectedCountry);
+      this.AppService.addData(this.selectedCountry);
     });
   }
 }

@@ -1,11 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-// import { Router } from '@angular/router';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-language-list',
   templateUrl: './language-list.component.html',
   styleUrls: ['./language-list.component.css'],
 })
-export class LanguageListComponent implements OnInit {
-  ngOnInit(): void {}
+export class LanguageListComponent {
+  selectedCountry: { languages: { name: string; nativeName: string } };
+  languages: { name: string; nativeName: string };
+
+  constructor(private AppService: AppService) {}
+
+  ngOnInit() {
+    this.AppService.sendSelcetedCountryName
+      .asObservable()
+      .subscribe((result) => {
+        this.selectedCountry = result;
+        this.languages = this.selectedCountry.languages;
+      });
+  }
 }

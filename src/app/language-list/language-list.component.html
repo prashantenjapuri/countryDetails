@@ -1,1 +1,12 @@
-<p>language-list works!</p>
+<h4>Language List</h4>
+<!-- table -->
+<table class="table table-dark">
+  <tr>
+    <th scope="row">Name</th>
+    <th>Native Name</th>
+  </tr>
+  <tr *ngFor="let lang of languages">
+    <td scope="row">{{ lang.name }}</td>
+    <td>{{ lang.nativeName }}</td>
+  </tr>
+</table>
