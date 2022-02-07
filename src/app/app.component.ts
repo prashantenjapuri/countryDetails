@@ -8,15 +8,21 @@ import { AppService } from './app.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  sideBarOpen = true;
   countryArray: {} = [];
   code: string;
   url: string;
   selectedCountry: {};
+  displaySpinner = false;
 
   constructor(private http: HttpClient, private AppService: AppService) {}
 
   ngOnInit() {
     this.fetchCountries();
+  }
+
+  onToggle() {
+    this.sideBarOpen = !this.sideBarOpen;
   }
 
   private fetchCountries() {
@@ -26,14 +32,16 @@ export class AppComponent {
     });
   }
 
-  onCountrySelection(event: PointerEvent) {
-    this.code = (<HTMLElement>event.target).id;
+  onCountrySelection(event: string) {
+    this.displaySpinner = true;
+    this.code = event;
     this.url = 'https://restcountries.com/v2/alpha/' + this.code;
 
     // api call --------- This will give you details of the selected country from the dropdown
     this.http.get(this.url).subscribe((country) => {
       this.selectedCountry = JSON.parse(JSON.stringify(country));
       this.AppService.addData(this.selectedCountry);
+      this.displaySpinner = false;
     });
   }
 }

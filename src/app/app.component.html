@@ -1,57 +1,66 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3 bg-dark text-white" style="height: 100vh">
+    <div
+      class="col-md-3 bg-dark text-white"
+      style="height: 100vh"
+      *ngIf="sideBarOpen"
+      [ngClass]="{ sideBar: sideBarOpen }"
+    >
       <nav class="navbar navbar-dark">
+        <div class="sidebar-header mb-2 mt-2">
+          <h3>Country Details</h3>
+        </div>
         <ul class="navbar-nav">
           <li
             class="nav-item"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link" routerLink="/">Home</a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" id="lang" routerLink="/language"
-              >Language List</a
+            <a class="nav-link" routerLink="/">
+              <i class="fas fa-home"></i> Home</a
             >
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/currency">Currency List</a>
+            <a class="nav-link" id="lang" routerLink="/language"
+              ><i class="fas fa-language"></i> Language List</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/currency"
+              ><i class="fas fa-money-bill-wave"></i> Currency List</a
+            >
           </li>
         </ul>
       </nav>
     </div>
-    <div class="col-md-9">
-      <div class="row bg-secondary" style="height: 10%">
-        <nav class="navbar navbar-expand-sm" style="width: 100%">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <!-- <a class="nav-link" href="#">Active</a> -->
-              <div class="dropdown">
-                <button
-                  type="button"
-                  class="btn btn-dark dropdown-toggle"
-                  data-toggle="dropdown"
-                >
-                  Select a Country
-                </button>
-                <div class="dropdown-menu" id="dropdown-country">
-                  <a
-                    class="dropdown-item"
-                    *ngFor="let country of countryArray"
-                    [id]="country.alpha3Code"
-                    (click)="onCountrySelection($event)"
-                    >{{ country.name }}</a
-                  >
-                </div>
-              </div>
-            </li>
-          </ul>
-        </nav>
+    <div class="col-md-9" [ngClass]="{ closedSidebar: !sideBarOpen }">
+      <div class="row bg-secondary" style="height: 60px">
+        <div class="input-group mt-2 ml-2">
+          <button class="btn btn-dark btn-custom mr-2" (click)="onToggle()">
+            <i class="fas fa-bars"></i>
+          </button>
+          <select
+            class="custom-select"
+            (change)="onCountrySelection($event.target.value)"
+          >
+            <option selected>Select a Country</option>
+            <option
+              *ngFor="let country of countryArray"
+              [value]="country.alpha3Code"
+            >
+              {{ country.name }}
+            </option>
+          </select>
+        </div>
       </div>
       <div class="row bg-light mt-3 ml-2" style="height: 85%">
-        <router-outlet></router-outlet>
+        <app-spinner *ngIf="displaySpinner"></app-spinner>
+        <router-outlet *ngIf="!displaySpinner"></router-outlet>
       </div>
     </div>
   </div>
 </div>
+<!-- <app-sidebar></app-sidebar> -->
+<!-- 
+onfocus="this.size=10;" onblur="this.size=1;" onchange="this.size=1;
+this.blur();" -->

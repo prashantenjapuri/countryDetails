@@ -1,9 +1,25 @@
-.dropdown-menu {
-  max-height: 175px;
-  overflow-y: auto;
-}
-
 h4 {
   margin: 0;
   padding: 0;
+}
+
+.custom-select {
+  max-width: 45%;
+}
+
+.btn-custom {
+  height: 75%;
+}
+.sidebar-header {
+  color: #d0d0d0;
+}
+
+/* dynamic classes */
+.closedSidebar {
+  max-width: 100% !important;
+  flex: 0 0 100%;
+}
+
+.sideBar {
+  transition: all 2s ease;
 }

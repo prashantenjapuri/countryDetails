@@ -4,6 +4,8 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,10 +19,23 @@ const appRoutes: Routes = [
     loadChildren: () =>
       import('./currency/currency.module').then((x) => x.CurrencyModule),
   },
+  {
+    path: 'not-found',
+    component: PageNotFoundComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '/not-found',
+  },
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    SpinnerComponent,
+    PageNotFoundComponent,
+  ],
   imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
   providers: [],
   bootstrap: [AppComponent],
