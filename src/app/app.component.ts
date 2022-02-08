@@ -12,8 +12,9 @@ export class AppComponent {
   countryArray: {} = [];
   code: string;
   url: string;
-  selectedCountry: {};
+  selectedCountry: { status: number };
   displaySpinner = false;
+  displayNoData = false;
 
   constructor(private http: HttpClient, private AppService: AppService) {}
 
@@ -34,12 +35,16 @@ export class AppComponent {
 
   onCountrySelection(event: string) {
     this.displaySpinner = true;
+    this.displayNoData = false;
     this.code = event;
     this.url = 'https://restcountries.com/v2/alpha/' + this.code;
 
     // api call --------- This will give you details of the selected country from the dropdown
     this.http.get(this.url).subscribe((country) => {
       this.selectedCountry = JSON.parse(JSON.stringify(country));
+      if (this.selectedCountry.status === 400) {
+        this.displayNoData = true;
+      }
       this.AppService.addData(this.selectedCountry);
       this.displaySpinner = false;
     });

@@ -44,6 +44,7 @@
             (change)="onCountrySelection($event.target.value)"
           >
             <option selected>Select a Country</option>
+            <option>Dummy</option>
             <option
               *ngFor="let country of countryArray"
               [value]="country.alpha3Code"
@@ -55,12 +56,11 @@
       </div>
       <div class="row bg-light mt-3 ml-2" style="height: 85%">
         <app-spinner *ngIf="displaySpinner"></app-spinner>
-        <router-outlet *ngIf="!displaySpinner"></router-outlet>
+        <router-outlet
+          *ngIf="!displaySpinner && !displayNoData"
+        ></router-outlet>
+        <app-no-data *ngIf="displayNoData"></app-no-data>
       </div>
     </div>
   </div>
 </div>
-<!-- <app-sidebar></app-sidebar> -->
-<!-- 
-onfocus="this.size=10;" onblur="this.size=1;" onchange="this.size=1;
-this.blur();" -->
